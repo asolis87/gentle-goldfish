@@ -28,11 +28,23 @@ results.
 
 ## Install
 
+**Gentle Shell (standalone `gentle-shell`).** It runs Pi in its own home,
+`~/.gentle-shell/agent`, so install the package there:
+
+```bash
+PI_CODING_AGENT_DIR=~/.gentle-shell/agent pi install git:github.com/asolis87/gentle-goldfish
+```
+
+**Gentle Shell with `gentle-shell --link`, or plain Pi.** Both use your Pi
+home, `~/.pi/agent`:
+
 ```bash
 pi install git:github.com/asolis87/gentle-goldfish
 ```
 
-Or try it for one session:
+Restart the session, or run `/reload`, to load the skills.
+
+Or try it in plain Pi for one session:
 
 ```bash
 pi -e git:github.com/asolis87/gentle-goldfish
