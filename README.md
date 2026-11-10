@@ -66,6 +66,74 @@ implementation, where cutting scope or fixing an ambiguous spec is cheapest,
 and check later whether specs still match the code. They do not replace any
 Gentle Shell review.
 
+```mermaid
+flowchart TD
+    U([User request]) --> A[1. Authorize]
+    A --> E[2. Explore]
+    E --> R[3. Resolve uncertainty]
+    R --> C{4. Classify<br/>Task Size}
+
+    C -- small --> SI[Inline implementation<br/>RED → GREEN]
+    SI --> CL
+
+    C -- large --> T["5. Track<br/>odd/tasks/&lt;feature&gt;.md<br/>Specs S# · Tasks · Log"]
+
+    subgraph GF["gentle-goldfish · before the first write"]
+        direction TB
+        GC["goldfish-comprehension<br/>paraphrases each S#<br/>flags stale S#"]
+        GZ["goldfish-zoom-out<br/>YAGNI · reuse<br/>path:line evidence"]
+    end
+
+    T --> GC
+    T --> GZ
+    GC --> H{Human decides<br/>on findings}
+    GZ --> H
+    H -- "accepts a change" --> LOG["Append a Log entry<br/>and rewrite only the affected S#"]
+    LOG --> T
+    H -- "spec OK" --> I
+
+    I["6. Implement task by task<br/>inline or gentle-ai-worker<br/>test-first"] --> V
+
+    subgraph REV["Existing Gentle Shell review · on code"]
+        direction TB
+        V["gentle-ai-verify<br/>verdict per S#"]
+        L4["4R lenses / RDD<br/>risk · resilience · readability · reliability"]
+        JD["judgment-day<br/>2 blind judges · max 2 rounds"]
+    end
+
+    V --> CL
+    L4 -.-> CL
+    JD -.-> CL
+    CL["7. Close<br/>work-unit commits<br/>Risk line"] --> D([Delivery: push / PR<br/>user decision])
+
+    D --> DOCS[("odd/tasks/*.md<br/>delivered specs")]
+
+    subgraph MAINT["gentle-goldfish · maintenance"]
+        DR["goldfish-drift-report<br/>Coverage per S#<br/>Drift + Undocumented"]
+    end
+
+    DOCS -. "periodically, before a release,<br/>or before resuming a feature" .-> DR
+    DR --> H2{Human decides:<br/>fix the doc or the code?}
+    H2 -- doc --> LOG
+    H2 -- code --> U
+
+    classDef new fill:#1f6f43,stroke:#3fb27f,color:#fff;
+    classDef existing fill:#2b2b2b,stroke:#777,color:#ddd;
+    classDef human fill:#5a3e00,stroke:#d9a400,color:#fff;
+    class GC,GZ,DR new;
+    class A,E,R,C,T,SI,I,V,L4,JD,CL,LOG existing;
+    class H,H2 human;
+```
+
+- **Before implementation** (large tasks only): comprehension and zoom-out
+  review the new feature document while no code exists yet.
+- **After implementation:** Gentle Shell's verification, 4R lenses, and
+  judgment-day run unchanged.
+- **Maintenance:** the drift report runs outside the per-feature cycle, on
+  specs that were already delivered.
+- **Human decisions:** no skill edits files. An accepted finding becomes a
+  `## Log` entry and a rewrite of only the affected `S#`, as ODD requires.
+
 ## License
 
 Apache-2.0. Reviewer personas and the drift-report workflow are adapted from
