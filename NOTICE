@@ -1,0 +1,31 @@
+gentle-goldfish
+Licensed under the Apache License, Version 2.0 (see LICENSE).
+
+This package adapts ideas and reviewer personas from the Elephant-Goldfish
+Model (EGM): https://github.com/google/elephant-goldfish-model
+Copyright Google LLC, licensed under the Apache License, Version 2.0.
+Source revision consulted: 8f168124593f26ce4125361f5e3ec9a073ebf174
+
+Files derived from EGM, and how they were changed:
+
+- skills/goldfish-comprehension/references/persona.md
+  Derived from agents/comprehension.md. Kept the paraphrase-first rule and
+  the undefined-term audit; removed BRAINSTORM mode; retargeted the input to
+  ODD feature documents (odd/tasks/<feature>.md) and other specs; added a
+  structured output with a per-spec (S#) paraphrase.
+
+- skills/goldfish-zoom-out/references/persona.md
+  Derived from agents/zoom_out.md. Kept the YAGNI, reuse, premature
+  optimization and altitude audit vectors; removed BRAINSTORM mode; made a
+  code search mandatory evidence for every reuse claim; added path:line
+  evidence requirements.
+
+- skills/goldfish-drift-report/SKILL.md
+  Derived from skills/egm-drift-report/SKILL.md. Kept the divergence
+  categories and the "report only differences" rule; added ODD spec (S#)
+  awareness, per-document delegation to read-only subagents, and an
+  explicit uncertain/unverifiable bucket.
+
+The SKILL.md orchestration in goldfish-comprehension and goldfish-zoom-out is
+original to this package. This package is not affiliated with or endorsed by
+Google or Gentleman Programming.

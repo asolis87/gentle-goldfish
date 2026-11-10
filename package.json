@@ -1,0 +1,22 @@
+{
+  "name": "gentle-goldfish",
+  "version": "0.1.0",
+  "description": "Fresh-context (goldfish) review skills for Pi and Gentle Shell: comprehension, zoom-out, and spec drift reports.",
+  "license": "Apache-2.0",
+  "keywords": [
+    "pi-package",
+    "gentle-shell-package",
+    "gentle-shell-skill"
+  ],
+  "files": [
+    "skills",
+    "README.md",
+    "LICENSE",
+    "NOTICE"
+  ],
+  "pi": {
+    "skills": [
+      "./skills"
+    ]
+  }
+}
